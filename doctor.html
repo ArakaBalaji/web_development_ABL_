@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MediCare - Doctor Appointment Booking</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f4f9fc;
+    color: #263b4a;
+}
+
+/* NAVIGATION BAR */
+
+header {
+    background: white;
+    padding: 18px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #087f8c;
+}
+
+.logo span {
+    color: #263b4a;
+}
+
+nav a {
+    text-decoration: none;
+    color: #344b5b;
+    margin-left: 22px;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: #0796a5;
+}
+
+/* HERO SECTION */
+
+.hero {
+    min-height: 480px;
+    padding: 75px 9%;
+    display: flex;
+    align-items: center;
+
+    background:
+    linear-gradient(90deg,
+    rgba(8,62,83,0.92),
+    rgba(8,62,83,0.25)),
+    url("https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1600&q=85");
+
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 52px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #65e1db;
+}
+
+.hero p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+.btn {
+    display: inline-block;
+    background: #08a5a8;
+    color: white;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #087f8c;
+}
+
+/* COMMON SECTION */
+
+section {
+    padding: 65px 8%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    color: #087f8c;
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    color: #758794;
+}
+
+/* SERVICES */
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 22px;
+}
+
+.service-card {
+    background: white;
+    text-align: center;
+    padding: 28px 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+}
+
+.service-card .icon {
+    font-size: 43px;
+    margin-bottom: 15px;
+}
+
+.service-card h3 {
+    color: #087f8c;
+    margin-bottom: 10px;
+}
+
+/* DOCTOR CARDS */
+
+.doctor-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 28px;
+}
+
+.doctor-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    transition: 0.3s;
+}
+
+.doctor-card:hover {
+    transform: translateY(-7px);
+}
+
+.doctor-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.doctor-info {
+    padding: 22px;
+}
+
+.doctor-info h3 {
+    color: #087f8c;
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+.doctor-info p {
+    color: #71828d;
+    margin: 7px 0;
+    font-size: 14px;
+}
+
+.speciality {
+    color: #0796a5 !important;
+    font-weight: bold;
+}
+
+.timing {
+    background: #e9f7f7;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+    color: #087f8c;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* APPOINTMENT SLOTS */
+
+.slot-section {
+    background: #eaf5f8;
+}
+
+.slot-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
+}
+
+.slot-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+.slot-card h3 {
+    color: #087f8c;
+    margin-bottom: 15px;
+}
+
+.slot {
+    display: inline-block;
+    background: #e2f5f1;
+    color: #087f8c;
+    padding: 9px 12px;
+    border-radius: 6px;
+    margin: 5px 3px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.slot.booked {
+    background: #ffe9e9;
+    color: #d45c5c;
+    text-decoration: line-through;
+}
+
+/* BOOKING FORM */
+
+.booking-section {
+    background: white;
+}
+
+.form-container {
+    max-width: 850px;
+    margin: auto;
+    background: #f5fafb;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+}
+
+.form-container h3 {
+    color: #087f8c;
+    margin-bottom: 25px;
+    font-size: 23px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #344b5b;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbdde3;
+    border-radius: 8px;
+    outline: none;
+    background: white;
+    font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #08a5a8;
+    box-shadow: 0 0 5px rgba(8,165,168,0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-btn {
+    background: #08a5a8;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 22px;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background: #087f8c;
+}
+
+/* CONTACT SECTION */
+
+.contact {
+    background: #eaf5f8;
+    text-align: center;
+}
+
+.contact h2 {
+    color: #087f8c;
+    margin-bottom: 18px;
+}
+
+.contact p {
+    line-height: 2;
+    color: #607784;
+}
+
+/* FOOTER */
+
+footer {
+    background: #123e50;
+    color: white;
+    text-align: center;
+    padding: 35px 8%;
+}
+
+footer h2 {
+    color: #63d6d1;
+    margin-bottom: 12px;
+}
+
+footer p {
+    color: #d4e5e9;
+    line-height: 1.8;
+}
+
+.copyright {
+    border-top: 1px solid #456471;
+    margin-top: 22px;
+    padding-top: 17px;
+    font-size: 13px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media(max-width:768px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    nav a {
+        margin: 0;
+        font-size: 13px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero {
+        padding: 60px 7%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: span 1;
+    }
+
+    .form-container {
+        padding: 22px;
+    }
+
+    section {
+        padding: 45px 6%;
+    }
+
+    .section-title h2 {
+        font-size: 27px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<header>
+
+    <div class="logo">✚ Medi<span>Care.</span></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#slots">Slots</a>
+        <a href="#booking">Book Appointment</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+</header>
+
+
+<!-- HERO SECTION -->
+
+<div class="hero" id="home">
+
+    <div class="hero-content">
+
+        <h1>
+            Your Health,<br>
+            Our <span>Priority.</span>
+        </h1>
+
+        <p>
+            Get connected with experienced doctors and
+            schedule your consultation easily.
+            Your journey towards better health starts here.
+        </p>
+
+        <a href="#booking" class="btn">
+            Book An Appointment →
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- SERVICES -->
+
+<section id="services">
+
+    <div class="section-title">
+
+        <h2>Our Medical Services</h2>
+
+        <p>Quality healthcare for every stage of life.</p>
+
+    </div>
+
+    <div class="services">
+
+        <div class="service-card">
+            <div class="icon">🫀</div>
+            <h3>Cardiology</h3>
+            <p>Heart health consultations and care.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🧠</div>
+            <h3>Neurology</h3>
+            <p>Brain and nervous system consultations.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🦷</div>
+            <h3>Dentistry</h3>
+            <p>Complete dental care and checkups.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">👶</div>
+            <h3>Pediatrics</h3>
+            <p>Healthcare services for children.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DOCTOR PROFILES -->
+
+<section id="doctors">
+
+    <div class="section-title">
+
+        <h2>Meet Our Doctors</h2>
+
+        <p>Consult with our experienced medical professionals.</p>
+
+    </div>
+
+    <div class="doctor-container">
+
+        <div class="doctor-card">
+
+            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=700&q=80">
+
+            <div class="doctor-info">
+
+                <h3>Dr. Rahul Sharma</h3>
+
+                <p class="speciality">Cardiologist</p>
+
+                <p>Experience: 12 Years</p>
+
+                <p>Consultation Fee: ₹600</p>
+
+                <div class="timing">
+                    Mon - Fri | 9:00 AM - 1:00 PM
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="doctor-card">
+
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=700&q=80">
+
+            <div class="doctor-info">
+
+                <h3>Dr. Priya Reddy</h3>
+
+                <p class="speciality">Dermatologist</p>
+
+                <p>Experience: 9 Years</p>
+
+                <p>Consultation Fee: ₹500</p>
+
+                <div class="timing">
+                    Mon - Sat | 10:00 AM - 2:00 PM
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="doctor-card">
+
+            <img src="https://tse1.mm.bing.net/th/id/OIP._i_d18hnmLOFdekteyVjkQHaE8?r=0&w=626&h=418&rs=1&pid=ImgDetMain&o=7&rm=3">
+
+            <div class="doctor-info">
+
+                <h3>Dr. Arjun Kumar</h3>
+
+                <p class="speciality">Neurologist</p>
+
+                <p>Experience: 15 Years</p>
+
+                <p>Consultation Fee: ₹700</p>
+
+                <div class="timing">
+                    Tue - Sat | 9:00 AM - 12:00 PM
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AVAILABLE SLOTS -->
+
+<section class="slot-section" id="slots">
+
+    <div class="section-title">
+
+        <h2>Available Appointment Slots</h2>
+
+        <p>Choose a convenient consultation time.</p>
+
+    </div>
+
+    <div class="slot-container">
+
+        <div class="slot-card">
+
+            <h3>Dr. Rahul Sharma</h3>
+
+            <p>Monday - Friday</p>
+
+            <br>
+
+            <span class="slot">9:00 AM</span>
+            <span class="slot">10:00 AM</span>
+            <span class="slot booked">11:00 AM</span>
+            <span class="slot">12:00 PM</span>
+
+        </div>
+
+
+        <div class="slot-card">
+
+            <h3>Dr. Priya Reddy</h3>
+
+            <p>Monday - Saturday</p>
+
+            <br>
+
+            <span class="slot">10:00 AM</span>
+            <span class="slot booked">11:00 AM</span>
+            <span class="slot">12:00 PM</span>
+            <span class="slot">1:00 PM</span>
+
+        </div>
+
+
+        <div class="slot-card">
+
+            <h3>Dr. Arjun Kumar</h3>
+
+            <p>Tuesday - Saturday</p>
+
+            <br>
+
+            <span class="slot">9:00 AM</span>
+            <span class="slot">10:00 AM</span>
+            <span class="slot">11:00 AM</span>
+            <span class="slot booked">12:00 PM</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- APPOINTMENT FORM -->
+
+<section class="booking-section" id="booking">
+
+    <div class="section-title">
+
+        <h2>Book Your Appointment</h2>
+
+        <p>Fill in your details to request a doctor consultation.</p>
+
+    </div>
+
+    <div class="form-container">
+
+        <h3>Patient Registration Form</h3>
+
+        <form action="#" method="get">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="name">Patient Full Name *</label>
+
+                    <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="age">Age *</label>
+
+                    <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    min="1"
+                    max="120"
+                    placeholder="Enter your age"
+                    required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">Email Address *</label>
+
+                    <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="example@gmail.com"
+                    required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">Phone Number *</label>
+
+                    <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    placeholder="Enter 10 digit number"
+                    required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="gender">Gender</label>
+
+                    <select id="gender" name="gender">
+
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Prefer not to say</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="doctor">Select Doctor *</label>
+
+                    <select id="doctor" name="doctor" required>
+
+                        <option value="">Choose a Doctor</option>
+
+                        <option>Dr. Rahul Sharma - Cardiologist</option>
+
+                        <option>Dr. Priya Reddy - Dermatologist</option>
+
+                        <option>Dr. Arjun Kumar - Neurologist</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="date">Appointment Date *</label>
+
+                    <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="time">Appointment Time *</label>
+
+                    <select id="time" name="time" required>
+
+                        <option value="">Select Time Slot</option>
+
+                        <option>9:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>12:00 PM</option>
+                        <option>1:00 PM</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label for="reason">Reason for Appointment</label>
+
+                    <textarea
+                    id="reason"
+                    name="reason"
+                    placeholder="Briefly describe your reason for consultation..."></textarea>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit Appointment Request →
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+
+    <h2>Contact MediCare</h2>
+
+    <p>📍 Vijayawada, Andhra Pradesh, India</p>
+
+    <p>📞 +91 98765 43210</p>
+
+    <p>✉️ support@medicare.com</p>
+
+    <p>🕒 Monday - Saturday | 9:00 AM - 6:00 PM</p>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h2>✚ MediCare.</h2>
+
+    <p>Your Health Is Our First Priority.</p>
+
+    <p>Quality Care | Experienced Doctors | Better Healthcare</p>
+
+    <div class="copyright">
+
+        © 2026 MediCare. All Rights Reserved.
+
+    </div>
+
+</footer>
+
+</body>
+</html>
